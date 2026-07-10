@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Craftsmen Works | Custom Furniture, Woodwork & Design</title>
+  <meta name="description" content="Craftsmen Works is a Miami-based luxury woodshop and design studio creating custom furniture, interior pieces, renderings, CNC work, and handcrafted statement pieces." />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #171717;
+      --gray: #4a4946;
+      --muted: #77716a;
+      --line: #e5ded4;
+      --sand: #f2eadf;
+      --stone: #dad6cf;
+      --wood: #8f5e3e;
+      --dark: #111111;
+      --max: 1180px;
+      --ease: cubic-bezier(.2,.7,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: Helvetica, Arial, sans-serif;
+      line-height: 1.55;
+      letter-spacing: .01em;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+
+    .topbar {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px clamp(18px, 4vw, 54px);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      position: relative;
+      z-index: 20;
+    }
+    .topbar span { color: var(--muted); }
+    .topbar a:hover { color: var(--wood); }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(229,222,212,.78);
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px clamp(18px, 3vw, 26px);
+      display: grid;
+      grid-template-columns: 210px 1fr auto;
+      gap: 28px;
+      align-items: center;
+    }
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+    .brand small {
+      display: block;
+      margin-top: 6px;
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: .22em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(13px, 2vw, 28px);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+    .nav-links a {
+      position: relative;
+      padding: 8px 0;
+      color: #2b2926;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 1px;
+      height: 1px;
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .35s var(--ease);
+    }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 0;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .search-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 111px);
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #171717;
+      color: white;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      opacity: .76;
+    }
+    .hero-media img,
+    .hero-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(14%) contrast(1.05);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.24) 42%, rgba(0,0,0,.62));
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(var(--max), calc(100% - 36px));
+      text-align: center;
+      padding: 90px 0 120px;
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      margin: 0 auto 24px;
+      max-width: 980px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(42px, 8vw, 98px);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+    .hero p {
+      margin: 0 auto 34px;
+      max-width: 760px;
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(255,255,255,.84);
+    }
+    .btn-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 24px;
+      border: 1px solid currentColor;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+      transition: all .3s var(--ease);
+      cursor: pointer;
+      background: transparent;
+    }
+    .btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .btn.light:hover { background: white; color: var(--ink); border-color: white; }
+    .btn.filled { background: var(--ink); color: white; border-color: var(--ink); }
+    .btn.filled:hover { background: var(--wood); border-color: var(--wood); }
+
+    .service-ribbon {
+      position: relative;
+      z-index: 3;
+      width: min(var(--max), calc(100% - 28px));
+      margin: -62px auto 0;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 20px 80px rgba(0,0,0,.12);
+      border: 1px solid rgba(229,222,212,.86);
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+    .service-ribbon a {
+      min-height: 104px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 18px 12px;
+      border-right: 1px solid var(--line);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 18px;
+      line-height: 1.12;
+      transition: background .25s var(--ease), color .25s var(--ease);
+    }
+    .service-ribbon a:last-child { border-right: 0; }
+    .service-ribbon a:hover { background: var(--dark); color: white; }
+
+    section { padding: clamp(70px, 10vw, 130px) clamp(18px, 4vw, 54px); }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+    .section-kicker {
+      margin: 0 0 14px;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--wood);
+    }
+    h2 {
+      margin: 0 0 24px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(34px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+    .lead {
+      max-width: 760px;
+      font-size: clamp(17px, 2vw, 22px);
+      color: #3e3a35;
+      margin-bottom: 34px;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: clamp(34px, 6vw, 84px);
+      align-items: center;
+    }
+    .soft-bg { background: var(--sand); }
+
+    .intro-image {
+      height: 540px;
+      width: 100%;
+      object-fit: cover;
+      background: var(--stone);
+    }
+
+    .clients { text-align: center; padding-top: 84px; }
+    .client-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .client-logo {
+      min-height: 126px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      color: #8a8379;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .17em;
+      background: white;
+    }
+    .client-logo img {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      opacity: .9;
+      filter: grayscale(1);
+    }
+
+    .work-section { padding-bottom: 40px; }
+    .project-block { margin: 0 0 clamp(70px, 8vw, 110px); }
+    .project-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+    .project-title h3 {
+      margin: 0;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 400;
+      letter-spacing: -.035em;
+    }
+    .project-title p {
+      margin: 0;
+      max-width: 470px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .tile {
+      position: relative;
+      overflow: hidden;
+      background: #ddd;
+      min-height: 260px;
+      cursor: pointer;
+    }
+    .tile.large { grid-column: span 7; min-height: 520px; }
+    .tile.medium { grid-column: span 5; min-height: 520px; }
+    .tile.small { grid-column: span 4; min-height: 280px; }
+    .tile.wide { grid-column: span 8; min-height: 330px; }
+    .tile img, .tile video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s var(--ease), filter .7s var(--ease);
+    }
+    .tile:hover img, .tile:hover video { transform: scale(1.055); filter: contrast(1.05); }
+    .tile-label {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,.88);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .service-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .service-card h3 {
+      margin: 0 0 14px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 28px;
+      font-weight: 400;
+    }
+    .service-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+    }
+    .service-card li { padding: 7px 0; border-top: 1px solid #f0ebe5; }
+
+    .image-stack {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    .image-stack img,
+    .image-stack video { object-fit: cover; width: 100%; background: var(--stone); }
+    .image-stack img:nth-child(1),
+    .image-stack video:nth-child(1) { grid-column: span 6; height: 420px; }
+    .image-stack img:nth-child(2),
+    .image-stack img:nth-child(3),
+    .image-stack video:nth-child(2),
+    .image-stack video:nth-child(3) { grid-column: span 3; height: 210px; }
+
+    .shop-band {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+    }
+    .shop-band .lead { color: rgba(255,255,255,.78); margin-left: auto; margin-right: auto; }
+    .product-row {
+      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      text-align: left;
+    }
+    .product-card { background: white; color: var(--ink); }
+    .product-card img { height: 310px; width: 100%; object-fit: cover; }
+    .product-card div { padding: 18px; }
+    .product-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 400;
+    }
+    .product-card p { margin: 0; color: var(--muted); }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: clamp(34px, 6vw, 78px);
+    }
+    .contact-details {
+      padding: 34px;
+      border: 1px solid var(--line);
+      background: var(--sand);
+    }
+    .contact-details p { color: var(--muted); }
+    .contact-form { display: grid; gap: 14px; }
+    .field-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 14px 15px;
+      outline: none;
+      transition: border .2s var(--ease);
+    }
+    input:focus, textarea:focus { border-color: var(--wood); }
+    textarea { min-height: 160px; resize: vertical; }
+
+    .feed-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 34px;
+    }
+    .feed-grid a { aspect-ratio: 1; overflow: hidden; background: #ddd; }
+    .feed-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+    .feed-grid a:hover img { transform: scale(1.08); }
+
+    footer {
+      padding: 34px clamp(18px, 4vw, 54px);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.86);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 200;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-height: 86vh; max-width: 92vw; object-fit: contain; }
+    .lightbox button {
+      position: fixed;
+      top: 22px;
+      right: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.45);
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    @media (max-width: 980px) {
+      .nav-inner { grid-template-columns: 1fr auto; }
+      .menu-toggle { display: block; }
+      .search-mark { display: none; }
+      .nav-links {
+        grid-column: 1 / -1;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 0 6px;
+        border-top: 1px solid var(--line);
+      }
+      .nav-links.open { display: flex; }
+      .service-ribbon { grid-template-columns: repeat(2, 1fr); }
+      .service-ribbon a { min-height: 84px; border-bottom: 1px solid var(--line); }
+      .split, .contact-wrap { grid-template-columns: 1fr; }
+      .client-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-row { grid-template-columns: 1fr; }
+      .feed-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 720px) {
+      .topbar { display: none; }
+      .hero { min-height: 78vh; }
+      .service-ribbon { margin-top: 0; width: 100%; box-shadow: none; border-left: 0; border-right: 0; }
+      .service-ribbon a { font-size: 16px; }
+      .project-title { align-items: flex-start; flex-direction: column; }
+      .gallery-grid { display: block; }
+      .tile, .tile.large, .tile.medium, .tile.small, .tile.wide { min-height: 310px; margin-bottom: 12px; }
+      .field-grid, .service-list { grid-template-columns: 1fr; }
+      .client-grid { grid-template-columns: 1fr; }
+      .intro-image { height: 340px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <span><a href="tel:7867204822">786-720-4822</a> | <a href="mailto:Danielhpulido@hotmail.com">Danielhpulido@hotmail.com</a></span>
+    <a href="https://instagram.com/dhp_projects" target="_blank" rel="noreferrer">Instagram</a>
+  </div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home">Craftsmen Works<small>Architecture + Woodshop</small></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#work">Work</a>
+        <a href="#design">Design</a>
+        <a href="#about">About</a>
+        <a href="#cnc">CNC Services</a>
+        <a href="#shop">Shop</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+      <div class="search-mark" aria-hidden="true">⌕</div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-media">
+        <video src="assets/home/hero-video.mp4" autoplay muted loop playsinline poster="assets/home/hero-poster.jpeg"></video>
+      </div>
+      <div class="hero-content">
+        <p class="eyebrow">Miami based design studio & custom woodshop</p>
+        <h1>Architecture and craftsmanship brought together.</h1>
+        <p>Welcome to Craftsmen Works — where architecture and craftsmanship come together. We design and build custom furniture, interior pieces, and visual concepts inspired by natural materials, modern design, and timeless detail.</p>
+        <div class="btn-row">
+          <a class="btn light" href="#work">View Work</a>
+          <a class="btn light" href="#contact">Start a Project</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="service-ribbon" aria-label="Service shortcuts">
+      <a href="#work">Custom Furniture</a>
+      <a href="#design">3D Renderings</a>
+      <a href="#design">Furniture Design</a>
+      <a href="#work">Interior Pieces</a>
+      <a href="#cnc">CNC Fabrication</a>
+      <a href="#shop">Domino Tables</a>
+      <a href="#contact">Custom Projects</a>
+    </div>
+
+    <section class="soft-bg">
+      <div class="section-inner split">
+        <div>
+          <p class="section-kicker">Craftsmen Works</p>
+          <h2>Luxury woodwork with a modern, architectural edge.</h2>
+          <p class="lead">Every project is created to bring warmth, character, and originality into a space. From slim entry tables to sculptural chairs and coastal storage pieces, the work is designed around material, proportion, and presence.</p>
+          <a class="btn filled" href="#work">Explore Portfolio</a>
+        </div>
+        <img class="intro-image" src="assets/home/entry-table-secondary.jpeg" alt="Custom midcentury entry table by Craftsmen Works" />
+      </div>
+    </section>
+
+    <section class="clients">
+      <div class="section-inner">
+        <p class="section-kicker">Identity</p>
+        <h2>Natural materials, clean lines, and timeless detail.</h2>
+        <div class="client-grid">
+          <div class="client-logo"><img src="assets/logo/assetslogologo-1 - Copy (2).png" alt="Craftsmen Works logo 1" /></div>
+          <div class="client-logo"><img src="assets/logo/logo-2.jpeg" alt="Craftsmen Works logo 2" /></div>
+          <div class="client-logo"><img src="assets/logo/logo-3.jpeg" alt="Craftsmen Works logo 3" /></div>
+          <div class="client-logo"><img src="assets/logo/logo-4.jpeg" alt="Craftsmen Works logo 4" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="work-section">
+      <div class="section-inner">
+        <p class="section-kicker">Selected work</p>
+        <h2>Portfolio.</h2>
+
+        <article class="project-block">
+          <div class="project-title">
+            <h3>Custom Midcentury Entry Table</h3>
+            <p>A refined mid-century inspired entry table designed to bring warmth and elegance into narrow spaces. Crafted with solid pine legs, a rich walnut top, and matching walnut drawers, the piece balances natural contrast with clean architectural lines.</p>
+          </div>
+          <div class="gallery-grid">
+            <figure class="tile large"><img src="assets/work/assetsworkentry-table-main.jpeg" alt="Custom midcentury entry table main view" /><figcaption class="tile-label">Main view</figcaption></figure>
+            <figure class="tile medium"><img src="assets/work/assetsworkentry-table-detail.jpeg" alt="Custom midcentury entry table detail" /><figcaption class="tile-label">Walnut detail</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkentry-table-process.jpeg" alt="Entry table process image" /><figcaption class="tile-label">Process</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkentry-table-showroom.jpeg" alt="Entry table installed view" /><figcaption class="tile-label">Installed</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkentry-table-extra.jpeg" alt="Entry table extra view" /><figcaption class="tile-label">Detail</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="project-block">
+          <div class="project-title">
+            <h3>Swivel Live Edge Oak Chair</h3>
+            <p>A sculptural swivel chair crafted from a reclaimed live-edge oak log once destined to be discarded. Mounted on a smooth 360-degree swivel base, the chair blends rustic materiality with modern functionality.</p>
+          </div>
+          <div class="gallery-grid">
+            <figure class="tile wide"><img src="assets/work/assetsworkoak-chair-main.jpeg" alt="Swivel live edge oak chair main view" /><figcaption class="tile-label">Reclaimed oak</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkoak-chair-detail.jpeg" alt="Swivel live edge oak chair detail" /><figcaption class="tile-label">Grain detail</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkoak-chair-process.jpeg" alt="Swivel live edge oak chair process" /><figcaption class="tile-label">Process</figcaption></figure>
+            <figure class="tile large"><img src="assets/work/assetsworkoak-chair-showroom.jpeg" alt="Swivel live edge oak chair showroom view" /><figcaption class="tile-label">Showroom</figcaption></figure>
+            <figure class="tile medium"><img src="assets/work/assetsworkoak-chair-extra.jpeg" alt="Swivel live edge oak chair extra view" /><figcaption class="tile-label">360 swivel</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="project-block">
+          <div class="project-title">
+            <h3>Beach Inspiration</h3>
+            <p>A lightweight pine chest and shelving combo inspired by relaxed coastal living and outdoor beachside spaces. Designed for easy transport and everyday functionality, the piece combines open shelving with practical storage.</p>
+          </div>
+          <div class="gallery-grid">
+            <figure class="tile large"><img src="assets/work/assetsworkbeach-storage-main.jpeg" alt="Beach inspired pine chest and shelf combo main view" /><figcaption class="tile-label">Main view</figcaption></figure>
+            <figure class="tile medium"><img src="assets/work/assetsworkbeach-storage-detail.jpeg" alt="Beach inspired shelf detail" /><figcaption class="tile-label">Shelf detail</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkbeach-storage-process.jpeg" alt="Beach inspired chest process" /><figcaption class="tile-label">Chest</figcaption></figure>
+            <figure class="tile small"><img src="assets/work/assetsworkbeach-storage-showroom.jpeg" alt="Beach inspired shelf installed view" /><figcaption class="tile-label">Installed</figcaption></figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="design" class="soft-bg">
+      <div class="section-inner split">
+        <div class="image-stack">
+          <img src="assets/design/assetsdesignmain-render.jpeg" alt="Architecture rendering by Craftsmen Works" />
+          <img src="assets/design/assetsdesignsketch-process.jpeg" alt="Sketch and process image" />
+          <img src="assets/design/assetsdesignmodeling-render.jpeg" alt="3D modeling and rendering image" />
+        </div>
+        <div>
+          <p class="section-kicker">Design services</p>
+          <h2>Concepts, drawings, renderings, and material studies.</h2>
+          <p class="lead">Craftsmen Works offers visual design services for furniture, interiors, and custom concepts, helping clients understand the piece before it is built.</p>
+          <div class="service-list">
+            <div class="service-card">
+              <h3>3D Design</h3>
+              <ul>
+                <li>3D renderings</li>
+                <li>Furniture design</li>
+                <li>Custom concepts</li>
+                <li>Material studies</li>
+              </ul>
+            </div>
+            <div class="service-card">
+              <h3>Production Support</h3>
+              <ul>
+                <li>Shop drawings</li>
+                <li>Design development</li>
+                <li>Material direction</li>
+                <li>Concept visualization</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-inner split">
+        <div>
+          <p class="section-kicker">About</p>
+          <h2>Architecture, designer, creator.</h2>
+          <p class="lead">Craftsmen Works was built from the perspective of a student who learned the beauty in woodworking. The studio combines architectural thinking with hands-on craft, creating pieces that feel personal, functional, and visually grounded.</p>
+          <a class="btn filled" href="#contact">Contact Craftsmen Works</a>
+        </div>
+        <div class="image-stack">
+          <img src="assets/about/assetsaboutabout-me.jpeg" alt="Craftsmen Works designer and creator" />
+          <video src="assets/about/assetsaboutmaterial-video.mp4" autoplay muted loop playsinline></video>
+          <img src="assets/about/assetsaboutcraftsmanship-detail.jpeg" alt="Craftsmanship detail by Craftsmen Works" />
+        </div>
+      </div>
+    </section>
+
+    <section id="cnc" class="soft-bg">
+      <div class="section-inner split">
+        <div>
+          <p class="section-kicker">CNC services</p>
+          <h2>Precision cutting, engraving, and fabrication.</h2>
+          <p class="lead">CNC services include engraving, cutting, slab flattening, furniture parts, MDF, plywood, and hardwood fabrication for custom furniture and design projects.</p>
+          <div class="service-list">
+            <div class="service-card">
+              <h3>Fabrication</h3>
+              <ul>
+                <li>Engraving</li>
+                <li>Cutting</li>
+                <li>Slab flattening</li>
+                <li>Furniture parts</li>
+              </ul>
+            </div>
+            <div class="service-card">
+              <h3>Materials</h3>
+              <ul>
+                <li>MDF</li>
+                <li>Plywood</li>
+                <li>Hardwood</li>
+                <li>Custom panels</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <figure class="tile large">
+          <video src="assets/cnc/assetscnccnc-machine-video.mp4" autoplay muted loop playsinline></video>
+          <figcaption class="tile-label">CNC process</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="shop" class="shop-band">
+      <div class="section-inner">
+        <p class="section-kicker">Shop / commissions</p>
+        <h2>Custom pieces and made-to-order furniture.</h2>
+        <p class="lead">Prices vary depending on size, material, finish, design complexity, and current market costs.</p>
+        <div class="product-row">
+          <article class="product-card">
+            <img src="assets/shop/assetsshopdomino-table.jpeg" alt="Custom domino table" />
+            <div><h3>Domino Table</h3><p>Starting range: $5,000 – $10,000. Varies with market and design.</p></div>
+          </article>
+          <article class="product-card">
+            <img src="assets/shop/assetsshopshelf.jpeg" alt="Custom shelf" />
+            <div><h3>Shelf</h3><p>Starting range: $300 – $1,000. Varies with market and design.</p></div>
+          </article>
+          <article class="product-card">
+            <img src="assets/shop/assetsshopdesk.jpeg" alt="Custom desk" />
+            <div><h3>Desk</h3><p>Pricing varies by material, size, and finish.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-inner contact-wrap">
+        <div class="contact-details">
+          <p class="section-kicker">Contact</p>
+          <h2>Let’s build something.</h2>
+          <p>Reach out for custom furniture, interior pieces, CNC work, renderings, or design concepts.</p>
+          <p><strong>Phone:</strong><br><a href="tel:7867204822">786-720-4822</a></p>
+          <p><strong>Email:</strong><br><a href="mailto:Danielhpulido@hotmail.com">Danielhpulido@hotmail.com</a></p>
+          <p><strong>Instagram:</strong><br><a href="https://instagram.com/dhp_projects" target="_blank" rel="noreferrer">@dhp_projects</a></p>
+          <p><strong>Location:</strong><br>Miami, Florida</p>
+        </div>
+        <form class="contact-form" name="contact" method="POST" data-netlify="true">
+          <input type="hidden" name="form-name" value="contact" />
+          <div class="field-grid">
+            <input type="text" name="name" placeholder="Your Name (required)" required />
+            <input type="email" name="email" placeholder="Your Email (required)" required />
+          </div>
+          <div class="field-grid">
+            <input type="tel" name="phone" placeholder="Your Phone Number" />
+            <input type="text" name="subject" placeholder="Subject" />
+          </div>
+          <textarea name="message" placeholder="Tell me about your project"></textarea>
+          <button class="btn filled" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="instagram" class="soft-bg">
+      <div class="section-inner">
+        <p class="section-kicker">Recent work</p>
+        <h2>Process, pieces, and honorable mentions.</h2>
+        <p class="lead">A rotating gallery for desks, coffee tables, domino tables, easels, and extra project images.</p>
+        <div class="feed-grid">
+          <a href="#"><img src="assets/feed/assetsfeeddesk-1.jpeg" alt="Desk recent work" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedcoffee-table-2a.jpeg" alt="Coffee table recent work" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedcoffee-table-2b.jpeg" alt="Coffee table detail" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedcoffee-table-1a.jpeg" alt="Coffee table 1" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedcoffee-table-1b.jpeg" alt="Coffee table 1 detail" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedcoffee-table-solo.jpeg" alt="Solo coffee table" /></a>
+          <a href="#"><img src="assets/feed/assetsfeeddomino-table-2a.jpeg" alt="Domino table 2" /></a>
+          <a href="#"><img src="assets/feed/assetsfeeddomino-table-2b.jpeg" alt="Domino table 2 detail" /></a>
+          <a href="#"><img src="assets/feed/assetsfeeddomino-table-2c.jpeg" alt="Domino table 2 extra" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedeasel.jpeg" alt="Custom easel" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedhonorable-mention-1.jpeg" alt="Honorable mention project 1" /></a>
+          <a href="#"><img src="assets/feed/assetsfeedhonorable-mention-2.jpeg" alt="Honorable mention project 2" /></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Copyright © 2026 Craftsmen Works. All Rights Reserved.</span>
+      <span><a href="mailto:Danielhpulido@hotmail.com">Email</a> · <a href="https://instagram.com/dhp_projects" target="_blank" rel="noreferrer">Instagram</a></span>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button id="closeLightbox" aria-label="Close image">×</button>
+    <img id="lightboxImage" alt="Expanded project image" />
+  </div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle?.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+
+    document.querySelectorAll('.tile img').forEach((img) => {
+      img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    function closeModal() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    closeLightbox?.addEventListener('click', closeModal);
+    lightbox?.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeModal();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
